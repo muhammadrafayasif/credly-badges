@@ -14,6 +14,10 @@ inputs:
     description: "Folder to save the generated image"
     required: false
     default: "badges"
+  commit:
+    description: "Whether to commit and push updated badges"
+    required: false
+    default: "false"
 
 runs:
   using: "composite"
@@ -31,7 +35,18 @@ runs:
       shell: bash
 
     - name: Run fetch-badges.py
-      # Use github.action_path to get the full path to the action's directory
       run: |
-        python fetch-badges.py "${{ inputs.credly-username }}" "${{ inputs.output-path }}"
+        python "$GITHUB_ACTION_PATH/fetch-badges.py" "${{ inputs.credly-username }}" "${{ inputs.output-path }}"
       shell: bash
+
+    - name: Commit and push badges
+      if: ${{ inputs.commit == 'true' }}
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add "${{ inputs.output-path }}/"
+        git commit -m "chore: update Credly badges [skip ci]" || echo "No changes to commit"
+        git push
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
