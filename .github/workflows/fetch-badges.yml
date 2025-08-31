@@ -12,6 +12,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: List files in action directory
+        run: |
+          ls -R .github/actions/fetch-badges
+
       - name: Run local fetch-badges Action
         uses: ./.github/actions/fetch-badges
         with:
