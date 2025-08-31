@@ -1,10 +1,10 @@
 name: "Fetch Credly Badges"
-description: "Scrapes Credly badges for a user and generates an SVG image."
+description: "Scrapes Credly badges for a user and generates an SVG image of all badges."
 author: "Muhammad Rafay"
 
 inputs:
   credly-username:
-    description: "The username to scrape badges from"
+    description: "The Credly username to scrape badges from"
     required: true
   output-path:
     description: "Folder to save the generated image"
@@ -29,5 +29,5 @@ runs:
     - name: Run fetch-badges.py
       # Use github.action_path to get the full path to the action's directory
       run: |
-        python ${{ github.action_path }}/fetch-badges.py "${{ inputs.credly-username }}" "${{ inputs.output-path }}"
+        python fetch-badges.py "${{ inputs.credly-username }}" "${{ inputs.output-path }}"
       shell: bash
