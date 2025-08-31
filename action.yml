@@ -2,6 +2,10 @@ name: "Fetch Credly Badges"
 description: "Scrapes Credly badges for a user and generates an SVG image of all badges."
 author: "Muhammad Rafay"
 
+branding:
+  icon: "award"
+  color: "blue"
+
 inputs:
   credly-username:
     description: "The Credly username to scrape badges from"
