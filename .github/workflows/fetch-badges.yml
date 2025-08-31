@@ -21,7 +21,11 @@ jobs:
           output-path: "badges"
 
       - name: Commit and push changes
-        uses: stefan-zimmermann/git-action-commit-push@v2
-        with:
-          commit_message: "chore: Update Credly badges SVG"
-          push_options: "--force-with-lease"
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add badges/               # adjust to your output folder or file
+          git commit -m "Update badges [skip ci]" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
