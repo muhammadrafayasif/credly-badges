@@ -18,6 +18,8 @@ def create_image_grid(image_urls, rows, cols, cell_size, output_file="grid.svg")
     """
     width, height = cols * cell_size[0], rows * cell_size[1]
     dwg = svgwrite.Drawing(output_file, size=(width, height))
+
+    dwg.add(dwg.rect(insert=(0, 0), size=(width, height), fill="white"))
     
     for idx, url in enumerate(image_urls):
         row = idx // cols
@@ -36,7 +38,7 @@ def create_image_grid(image_urls, rows, cols, cell_size, output_file="grid.svg")
         )
 
     dwg.save()
-    print(f"SVG saved as {output_file}. It's self-contained and works on GitHub.")
+    print(f"SVG saved as {output_file}.")
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
@@ -47,8 +49,6 @@ with sync_playwright() as p:
     badges = page.query_selector_all('.EarnedBadgeCardstyles__ImageContainer-fredly__sc-gsqjwh-0.dDMlBy')
 
     images = [i.get_attribute('src') for i in badges]
-    for i in images:
-        print(i)
     create_image_grid(images, 3, 4, (100, 100))
 
     browser.close()
