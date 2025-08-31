@@ -1,19 +1,23 @@
 from playwright.sync_api import sync_playwright
-import svgwrite
+import svgwrite, requests, base64
 USERID = 'muhammadrafayasif'
+
+def url_to_data_uri(url):
+    """
+    Download an image from a URL and return it as a base64 data URI.
+    """
+    response = requests.get(url)
+    response.raise_for_status()
+    mime_type = response.headers.get("Content-Type", "image/png")  # fallback to PNG
+    encoded = base64.b64encode(response.content).decode("utf-8")
+    return f"data:{mime_type};base64,{encoded}"
 
 def create_image_grid(image_urls, rows, cols, cell_size, output_file="grid.svg"):
     """
-    Create an SVG grid of images from URLs.
-
-    :param image_urls: List of image URLs to include in the grid
-    :param rows: Number of rows in the grid
-    :param cols: Number of columns in the grid
-    :param cell_size: Tuple (width, height) of each grid cell
-    :param output_file: Output SVG filename
+    Create a self-contained SVG grid of images (embedded as base64).
     """
-    dwg = svgwrite.Drawing(output_file, 
-                           size=(cols * cell_size[0], rows * cell_size[1]))
+    width, height = cols * cell_size[0], rows * cell_size[1]
+    dwg = svgwrite.Drawing(output_file, size=(width, height))
     
     for idx, url in enumerate(image_urls):
         row = idx // cols
@@ -24,13 +28,15 @@ def create_image_grid(image_urls, rows, cols, cell_size, output_file="grid.svg")
         x = col * cell_size[0]
         y = row * cell_size[1]
 
-        # Add image with given URL
+        data_uri = url_to_data_uri(url)
+
+        # Add the image as a base64 data URI
         dwg.add(
-            dwg.image(href=url, insert=(x, y), size=cell_size)
+            dwg.image(href=data_uri, insert=(x, y), size=cell_size)
         )
 
     dwg.save()
-    print(f"SVG saved as {output_file}")
+    print(f"SVG saved as {output_file}. It's self-contained and works on GitHub.")
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
