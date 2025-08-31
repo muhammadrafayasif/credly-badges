@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run Credly Badges Action
-        uses: muhammadrafayasif/credly-badges@v1
+        uses: muhammadrafayasif/credly-badges@v1.0.0
         with:
           credly-username: "your-credly-username"
           output-path: "badges"
