@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate-badges:
+  daily-badges:
     runs-on: ubuntu-latest
     steps:
       - name: Run local fetch-badges Action

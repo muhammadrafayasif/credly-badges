@@ -42,10 +42,12 @@ def create_image_grid(image_urls, rows, cols, cell_size, output_folder="badges",
     dwg.save()
     print(f"SVG saved as {output_path}.")
 
-def main(username, output_path):
+def main(username, output_folder):
+    repo_root = os.getcwd()
+    full_output_path = os.path.join(repo_root, output_folder)
+
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        context = browser.new_context(java_script_enabled=True) 
         page = browser.new_page()
         page.goto(f'https://www.credly.com/users/{username}/badges#credly')
         page.wait_for_selector('.EarnedBadgeCardstyles__ImageContainer-fredly__sc-gsqjwh-0.dDMlBy', timeout=60000)
@@ -56,7 +58,7 @@ def main(username, output_path):
         rows = math.ceil(len(images) / 4)
         columns = 4
 
-        create_image_grid(images, rows, columns, (100, 100), output_folder=output_path)
+        create_image_grid(images, rows, columns, (100, 100), full_output_path)
 
         browser.close()
 
