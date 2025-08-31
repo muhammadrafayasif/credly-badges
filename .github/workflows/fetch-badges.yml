@@ -17,4 +17,3 @@ jobs:
         with:
           credly-username: "muhammadrafayasif"
           output-path: "badges"
-
