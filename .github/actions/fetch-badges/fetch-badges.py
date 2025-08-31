@@ -43,9 +43,6 @@ def create_image_grid(image_urls, rows, cols, cell_size, output_folder="badges",
     print(f"SVG saved as {output_path}.")
 
 def main(username, output_folder):
-    repo_root = os.getcwd()
-    full_output_path = os.path.join(repo_root, output_folder)
-
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
@@ -58,7 +55,7 @@ def main(username, output_folder):
         rows = math.ceil(len(images) / 4)
         columns = 4
 
-        create_image_grid(images, rows, columns, (100, 100), full_output_path)
+        create_image_grid(images, rows, columns, (100, 100), output_folder)
 
         browser.close()
 

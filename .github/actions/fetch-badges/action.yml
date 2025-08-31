@@ -27,6 +27,7 @@ runs:
       shell: bash
 
     - name: Run fetch-badges.py
+      # Use github.action_path to get the full path to the action's directory
       run: |
-        python ./.github/actions/fetch-badges/fetch-badges.py "${{ inputs.credly-username }}" "${{ inputs.output-path }}"
+        python ${{ github.action_path }}/fetch-badges.py "${{ inputs.credly-username }}" "${{ inputs.output-path }}"
       shell: bash
