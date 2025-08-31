@@ -6,18 +6,22 @@ on:
   workflow_dispatch:
 
 jobs:
+  permissions:
+    contents: write
   daily-badges:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List files in action directory
-        run: |
-          ls -R .github/actions/fetch-badges
-
       - name: Run local fetch-badges Action
         uses: ./.github/actions/fetch-badges
         with:
           credly-username: "muhammadrafayasif"
           output-path: "badges"
+
+      - name: Commit and push changes
+        uses: stefan-zimmermann/git-action-commit-push@v2
+        with:
+          commit_message: "chore: Update Credly badges SVG"
+          push_options: "--force-with-lease"
