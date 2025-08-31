@@ -1,0 +1,33 @@
+name: "Fetch Credly Badges"
+description: "Scrapes Credly badges for a user and generates an SVG image."
+author: "Muhammad Rafay"
+
+inputs:
+  credly-username:
+    description: "The username to scrape badges from"
+    required: true
+  output-path:
+    description: "Folder to save the generated image"
+    required: false
+    default: "badges"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install svgwrite requests playwright
+        playwright install chromium
+
+    - name: Run fetch-badges.py
+      run: |
+        python .github/actions/fetch-badges/fetch-badges.py "${{ inputs.credly-username }}" "${{ inputs.output-path }}"

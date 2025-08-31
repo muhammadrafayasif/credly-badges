@@ -1,0 +1,19 @@
+name: Daily Badges
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # daily at 12:00 UTC
+  workflow_dispatch:
+
+jobs:
+  daily-badges:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run local fetch-badges Action
+        uses: ./.github/actions/fetch-badges
+        with:
+          credly-username: "muhammadrafayasif"
+          output-path: "badges"
