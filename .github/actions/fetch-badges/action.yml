@@ -27,7 +27,9 @@ runs:
         pip install --upgrade pip
         pip install svgwrite requests playwright
         playwright install chromium
+      shell: bash
 
     - name: Run fetch-badges.py
       run: |
-        python .github/actions/fetch-badges/fetch-badges.py "${{ inputs.credly-username }}" "${{ inputs.output-path }}"
+        python ./.github/actions/fetch-badges/fetch-badges.py "${{ inputs.credly-username }}" "${{ inputs.output-path }}"
+      shell: bash
