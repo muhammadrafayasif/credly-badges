@@ -17,7 +17,7 @@ Automatically scrape your **Credly badges** and generate a neat SVG image grid t
 Add the following workflow to `.github/workflows/daily-badges.yml` in your repo:
 
 >[!NOTE]
->The Action is not published on the market yet, so use muhammadrafayasif/credly-badges@main instead
+> Replace `credly-username` with your username from Credly
 
 ```yaml
 name: Daily Credly Badges
@@ -38,7 +38,7 @@ jobs:
       - name: Fetch Credly Badges
         uses: muhammadrafayasif/credly-badges@v1.0.0
         with:
-          credly-username: "muhammadrafayasif"
+          credly-username: "[username]"
           output-path: "badges"
           
       - name: Commit updated badges
