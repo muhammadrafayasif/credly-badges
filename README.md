@@ -52,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-## Demonstration
+## 🖼️ Demonstration
 
 <p align="center">
   <img src="https://github.com/muhammadrafayasif/muhammadrafayasif/raw/main/badges/grid.svg" alt="Badges"/>
