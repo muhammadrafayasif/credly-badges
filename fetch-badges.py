@@ -39,7 +39,7 @@ def main(username):
 
         content = str()
         for n, i in enumerate(images):
-            content+=f"<a href=\"https://wsrv.nl/?url=https://www.credly.com{urls[n]}\"><img src=\"{i}\" alt=\"Credly Badge\" width=\"100\"/></a>\n"
+            content+=f"<a href=\"https://www.credly.com{urls[n]}\"><img src=\"https://wsrv.nl/?url={i}\" alt=\"Credly Badge\" width=\"100\"/></a>\n"
         
         updated = replace_section(readme, START_TAG, END_TAG, content)
 
