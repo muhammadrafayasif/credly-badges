@@ -1,7 +1,5 @@
 import sys, re
 from pathlib import Path
-import sys, re
-from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 def replace_section(text, start_tag, end_tag, new_content):
@@ -20,7 +18,6 @@ def replace_section(text, start_tag, end_tag, new_content):
     replacement = f"{start_tag}\n{new_content.strip()}\n{end_tag}"
     return re.sub(pattern, replacement, text)
 
-def main(username):
 def main(username):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
