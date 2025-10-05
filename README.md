@@ -16,33 +16,37 @@ Automatically scrape your **Credly badges** and generate a neat grid that you ca
 
 Add the following workflow to `.github/workflows/daily-badges.yml` in your repo:
 
+>[!NOTE]
+> Replace `credly-username` with your username from Credly
+
 ```yaml
-name: Daily Badges
+name: Daily Credly Badges
 
 on:
   schedule:
-    - cron: '0 12 * * *' # Runs daily at 12:00 UTC
-  workflow_dispatch:       # Allow manual trigger
+    - cron: '0 12 * * *'  # runs daily at 12:00 UTC
+  workflow_dispatch:       # manual trigger
 
 jobs:
-  daily-badges:
+  fetch-badges:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Run Credly Badges Action
+      - name: Fetch Credly Badges
         uses: muhammadrafayasif/credly-badges@v1.0.0
         with:
-          credly-username: "your-credly-username"
+          credly-username: "[username]"
           output-path: "badges"
-
-      - name: Commit and push badges
+          
+      - name: Commit updated badges
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add badges/
-          git commit -m "Update Credly badges [skip ci]" || echo "No changes to commit"
+          git commit -m "chore: update Credly badges SVG [skip ci]" || echo "No changes to commit"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
