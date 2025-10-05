@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Fetch Credly Badges
-        uses: muhammadrafayasif/credly-badges@v1.0.0
+        uses: muhammadrafayasif/credly-badges@v1.0.1
         with:
           credly-username: "[username]"
           output-path: "badges"
@@ -45,8 +45,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add badges/
-          git commit -m "chore: update Credly badges SVG [skip ci]" || echo "No changes to commit"
+          git add README.md
+          git commit -m "chore: update Credly badges [skip ci]" || echo "No changes to commit"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
