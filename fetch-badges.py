@@ -55,4 +55,3 @@ if __name__=='__main__':
 
     username = sys.argv[1]
     main(username)
-    main(username)
