@@ -39,9 +39,7 @@ def main(username):
         browser.close()
 
 if __name__=='__main__':
-    if len(sys.argv) < 1:
-        print("Usage: python fetch-badges.py <credly-username>")
-    if len(sys.argv) < 1:
+    if len(sys.argv) != 2:
         print("Usage: python fetch-badges.py <credly-username>")
         sys.exit(1)
 
