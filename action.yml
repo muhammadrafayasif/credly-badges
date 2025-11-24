@@ -10,10 +10,6 @@ inputs:
   credly-username:
     description: "The Credly username to scrape badges from"
     required: true
-  output-path:
-    description: "Folder to save the generated image"
-    required: false
-    default: "badges"
   commit:
     description: "Whether to commit and push updated badges"
     required: false
@@ -40,7 +36,7 @@ runs:
 
     - name: Run fetch-badges.py
       run: |
-        python "$GITHUB_ACTION_PATH/fetch-badges.py" "${{ inputs.credly-username }}" "${{ inputs.output-path }}"
+        python "$GITHUB_ACTION_PATH/fetch-badges.py" "${{ inputs.credly-username }}"
       shell: bash
 
     - name: Commit and push badges
