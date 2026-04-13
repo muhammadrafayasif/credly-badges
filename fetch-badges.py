@@ -16,11 +16,12 @@ def main(username):
         page = browser.new_page()
         page.goto(f'https://www.credly.com/users/{username}/badges#credly')
         page.wait_for_selector('.EarnedBadgeCardstyles__ImageContainer-fredly__sc-gsqjwh-0.dDMlBy', timeout=60000)
-        badges = page.query_selector_all('.EarnedBadgeCardstyles__ImageContainer-fredly__sc-gsqjwh-0.dDMlBy')
-        links = page.query_selector_all('.Cardstyles__StyledContainer-fredly__sc-1yaakoz-0.fRJHRP.EarnedBadgeCardstyles__StyledCard-fredly__sc-gsqjwh-1.jwtiVz')
-        links = page.query_selector_all('.Cardstyles__StyledContainer-fredly__sc-1yaakoz-0.fRJHRP.EarnedBadgeCardstyles__StyledCard-fredly__sc-gsqjwh-1.jwtiVz')
-
-        images = [i.get_attribute('src') for i in badges]
+        links = page.query_selector_all('[data-testid="desktop-badge-card"]')
+        
+        images = [
+            img.get_attribute("src")
+            for img in page.query_selector_all('[data-testid="desktop-badge-card"] img')
+        ]
         urls = [i.get_attribute('href') for i in links]
         
         README_PATH = Path("README.md")
