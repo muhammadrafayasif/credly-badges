@@ -18,8 +18,11 @@ def main(username):
         page.wait_for_selector('.EarnedBadgeCardstyles__ImageContainer-fredly__sc-gsqjwh-0.dDMlBy', timeout=60000)
         links = page.query_selector_all('[data-testid="desktop-badge-card"]')
         
-        images = [
-            img.get_attribute("src")
+        metadata = [
+            {
+                "src": img.get_attribute("src"),
+                "alt": img.get_attribute("alt")
+            }
             for img in page.query_selector_all('[data-testid="desktop-badge-card"] img')
         ]
         urls = [i.get_attribute('href') for i in links]
@@ -31,8 +34,8 @@ def main(username):
         END_TAG = "<!-- END_CREDLY_BADGES -->"
 
         content = str()
-        for n, i in enumerate(images):
-            content+=f"<a href=\"https://www.credly.com{urls[n]}\"><img src=\"https://wsrv.nl/?url={i}\" alt=\"Credly Badge\" width=\"100\"/></a>\n"
+        for n, i in enumerate(metadata):
+            content+=f"<a href=\"https://www.credly.com{urls[n]}\"><img src=\"https://wsrv.nl/?url={i['src']}\" alt=\"{i['alt']}\" width=\"100\"/></a>\n"
         
         updated = replace_section(readme, START_TAG, END_TAG, content)
 
